@@ -30,4 +30,6 @@ public:
 	CEdit content;
 	CListBox mList;
 	afx_msg void OnEnChangeEdit1();
+
+	void DlgChattingRoom::InsertContent(CString nickname, CString content);
 };

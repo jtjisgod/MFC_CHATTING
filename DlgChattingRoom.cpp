@@ -39,23 +39,19 @@ BEGIN_MESSAGE_MAP(DlgChattingRoom, CDialogEx)
 	ON_EN_CHANGE(IDC_EDIT1, &DlgChattingRoom::OnEnChangeEdit1)
 END_MESSAGE_MAP()
 
-
-
-
-void DlgChattingRoom::OnBnClickedOk()
-{
-	CString nickname = this->nickname;
-	CString content;
-
-	this->content.GetWindowTextW(content);
-	this->content.SetWindowTextW(L"");
-
+void DlgChattingRoom::InsertContent(CString nickname, CString content) {
 	content.Format(_T("%s: %s"), nickname, content);
 	int height = mList.InsertString(-1, content);
-	
 	mList.SetCurSel(height);
 }
 
+void DlgChattingRoom::OnBnClickedOk()
+{
+	CString content;
+	this->content.GetWindowTextW(content);
+	this->content.SetWindowTextW(L"");
+	this->InsertContent(this->nickname, content);
+}
 
 void DlgChattingRoom::OnClose()
 {
