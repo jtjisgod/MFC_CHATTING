@@ -29,4 +29,5 @@ public:
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	CEdit content;
 	CListBox mList;
+	afx_msg void OnEnChangeEdit1();
 };

@@ -36,6 +36,7 @@ BEGIN_MESSAGE_MAP(DlgChattingRoom, CDialogEx)
 	ON_BN_CLICKED(IDOK, &DlgChattingRoom::OnBnClickedOk)
 	ON_WM_CLOSE()
 	ON_WM_KEYDOWN()
+	ON_EN_CHANGE(IDC_EDIT1, &DlgChattingRoom::OnEnChangeEdit1)
 END_MESSAGE_MAP()
 
 
@@ -45,9 +46,14 @@ void DlgChattingRoom::OnBnClickedOk()
 {
 	CString nickname = this->nickname;
 	CString content;
+
 	this->content.GetWindowTextW(content);
-	mList.AddString(content);
 	this->content.SetWindowTextW(L"");
+
+	content.Format(_T("%s: %s"), nickname, content);
+	int height = mList.InsertString(-1, content);
+	
+	mList.SetCurSel(height);
 }
 
 
@@ -71,7 +77,18 @@ BOOL DlgChattingRoom::PreTranslateMessage(MSG* pMsg) {
 	if (pMsg->message == WM_KEYDOWN) {
 		if (pMsg->wParam == VK_RETURN) {
 			OnBnClickedOk();
+			return true;
 		}
 	}
 	return CDialog::PreTranslateMessage(pMsg);
+}
+
+void DlgChattingRoom::OnEnChangeEdit1()
+{
+	// TODO:  RICHEDIT 컨트롤인 경우, 이 컨트롤은
+	// CDialogEx::OnInitDialog() 함수를 재지정 
+	//하고 마스크에 OR 연산하여 설정된 ENM_CHANGE 플래그를 지정하여 CRichEditCtrl().SetEventMask()를 호출하지 않으면
+	// 이 알림 메시지를 보내지 않습니다.
+
+	// TODO:  여기에 컨트롤 알림 처리기 코드를 추가합니다.
 }
